@@ -1,0 +1,160 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+   Design tokens. Four depth layers per theme, never pure black or pure white
+   as a text/canvas pair. Components reference semantic names only, so the
+   whole palette can be re-hued from this one block.
+   --------------------------------------------------------------------------- */
+:root {
+  --c-canvas: 248 250 252;
+  --c-surface: 255 255 255;
+  --c-raised: 241 245 249;
+  --c-overlay: 255 255 255;
+  --c-hairline: 226 232 240;
+  --c-edge: 203 213 225;
+  --c-fg: 15 23 42;
+  --c-fg-soft: 51 65 85;
+  --c-fg-muted: 71 85 105;
+  --c-fg-faint: 100 116 139;
+  --c-accent: 79 70 229;
+  --c-accent-strong: 67 56 202;
+  --c-accent-press: 55 48 163;
+  --c-accent-text: 67 56 202;
+  --c-ok: 5 150 105;
+  --c-warn: 180 83 9;
+  --c-bad: 220 38 38;
+  --c-info: 14 116 144;
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.06), 0 1px 3px rgb(15 23 42 / 0.1);
+  --shadow-pop: 0 10px 30px rgb(15 23 42 / 0.14);
+  color-scheme: light;
+}
+
+.dark {
+  --c-canvas: 2 6 23;
+  --c-surface: 15 23 42;
+  --c-raised: 30 41 59;
+  --c-overlay: 30 41 59;
+  --c-hairline: 30 41 59;
+  --c-edge: 51 65 85;
+  --c-fg: 241 245 249;
+  --c-fg-soft: 203 213 225;
+  --c-fg-muted: 148 163 184;
+  --c-fg-faint: 100 116 139;
+  --c-accent: 79 70 229;
+  --c-accent-strong: 99 102 241;
+  --c-accent-press: 67 56 202;
+  --c-accent-text: 129 140 248;
+  --c-ok: 52 211 153;
+  --c-warn: 251 191 36;
+  --c-bad: 248 113 113;
+  --c-info: 34 211 238;
+  --shadow-card: 0 1px 2px rgb(2 6 23 / 0.4), 0 1px 3px rgb(2 6 23 / 0.3);
+  --shadow-pop: 0 10px 30px rgb(2 6 23 / 0.6);
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-canvas text-fg-soft font-sans antialiased;
+  }
+
+  /* Keyboard affordance on every focusable thing; pointer clicks stay quiet. */
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent/60 ring-offset-2;
+    --tw-ring-offset-color: rgb(var(--c-canvas));
+  }
+
+  ::selection {
+    background: rgb(var(--c-accent) / 0.25);
+  }
+}
+
+@layer components {
+  .card {
+    @apply bg-surface border border-hairline rounded-xl;
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Only for a card that is itself a link or button: border shift, no motion. */
+  .card-link {
+    @apply hover:border-edge;
+  }
+
+  .label {
+    @apply text-[11px] font-semibold uppercase tracking-wider text-fg-faint;
+  }
+
+  .scroll-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--c-edge)) transparent;
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-edge;
+  }
+
+  .scroll-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/* Honour the OS reduced-motion setting, including the drawer/toast transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Syntax highlighting tokens. Defined per theme so a snippet stays legible in
+   both, with every colour clearing 4.5:1 against the code surface.
+   --------------------------------------------------------------------------- */
+:root {
+  --s-plain: #1e293b;
+  --s-comment: #64748b;
+  --s-keyword: #7c3aed;
+  --s-string: #047857;
+  --s-number: #b45309;
+  --s-type: #0e7490;
+  --s-fn: #1d4ed8;
+  --s-bg: #f8fafc;
+}
+
+.dark {
+  --s-plain: #e2e8f0;
+  --s-comment: #8094ae;
+  --s-keyword: #c4b5fd;
+  --s-string: #6ee7b7;
+  --s-number: #fcd34d;
+  --s-type: #7dd3fc;
+  --s-fn: #a5c8fd;
+  --s-bg: #0b1220;
+}
+
+.code-surface {
+  background: var(--s-bg);
+  color: var(--s-plain);
+}
+
+.tok-comment { color: var(--s-comment); font-style: italic; }
+.tok-keyword { color: var(--s-keyword); font-weight: 600; }
+.tok-string  { color: var(--s-string); }
+.tok-number  { color: var(--s-number); }
+.tok-type    { color: var(--s-type); }
+.tok-fn      { color: var(--s-fn); }
+.tok-plain   { color: var(--s-plain); }

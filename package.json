@@ -1,0 +1,41 @@
+{
+  "name": "java-assessment-platform",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint": "oxlint",
+    "verify": "node scripts/verify-bank.mjs && node scripts/verify-sql.mjs",
+    "verify:java": "node scripts/verify-bank.mjs",
+    "verify:sql": "node scripts/verify-sql.mjs",
+    "verify:engine": "node scripts/verify-sql.mjs --engine",
+    "verify:structural": "node scripts/verify-bank.mjs --structural && node scripts/verify-sql.mjs --bank",
+    "test:e2e": "node scripts/e2e.mjs",
+    "test:e2e:java": "node scripts/e2e.mjs --only java",
+    "test:e2e:sql": "node scripts/e2e.mjs --only sql",
+    "check": "npm run lint && npm run build && npm run verify"
+  },
+  "dependencies": {
+    "lucide-react": "^1.61.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "autoprefixer": "^10.6.1",
+    "esbuild": "^0.28.2",
+    "oxlint": "^1.88.0",
+    "postcss": "^8.5.31",
+    "tailwindcss": "^3.4.19",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.4"
+  },
+  "description": "Two-major assessment platform for junior software engineer interview preparation: Java/OOP and SQL."
+}
